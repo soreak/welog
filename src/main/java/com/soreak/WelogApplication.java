@@ -1,4 +1,4 @@
-package com.soreak.welog;
+package com.soreak;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

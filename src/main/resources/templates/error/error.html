@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>error</title>
+</head>
+<body>
+<h1>ERROR</h1>
+<div>
+    <div th:utext="'&lt;!--'" th:remove="tag"></div>
+    <div th:utext="'Failed Request URL : '+${url}" th:remove="tag"></div>
+    <div th:utext="'Exception mesage : '+${exception.message}" th:remove="tag"></div>
+    <ul th:remove="tag">
+        <div th:each="'--&gt;'" th:remove="tag"></div>
+    </ul>
+</div>
+</body>
+</html>

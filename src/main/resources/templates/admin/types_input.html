@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width ,initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+
     <link rel="stylesheet" href="../../static/css/me.css">
-    <title>管理页面</title>
+    <title>分类新增</title>
 </head>
 <body>
 <!--导航-->
     <!--m 自定义 间距 上下 -->
-    <nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">管理后台</h2>
                 <a href="#" class="active m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
                 <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
                 <a href="#" class="m-item item m-mobile-hide"><i class="target icon"></i>标签</a>
-
+                <a href="#" class="item m-item m-mobile-hide"><i class="lone icon"></i>归档</a>
+                <a href="#" class="item m-item m-mobile-hide"><i class="info icon"></i>关于我</a>
                 <div class="right m-item m-mobile-hide menu">
 
                     <div class="ui dropdown item">
@@ -45,8 +49,8 @@
     <div class="ui container">
         <div class="ui attached pointing menu">
             <div class="ui right menu">
-                <a href="#" class="item">发布</a>
-                <a href="#" class="active teal item">列表</a>
+                <a href="#" class="active teal item">发布</a>
+                <a href="#" class="item">列表</a>
             </div>
 
         </div>
@@ -57,81 +61,22 @@
     <div class="m-container-small m-padded-tb-big">
         <!--container 响应移动端-->
         <div class="ui container">
-            <form action="#" method="post" class="ui form segment">
-                <!--默认是占满宽度，inline 就缩小宽度-->
-                <div class="inline fields">
-                    <div class="field">
-                        <input type="text" name="title" placeholder="标题">
+            <form action="#" method="post" th:action="@{/admin/types}" class="ui form">
+                <div class="required field">
+                    <div class="ui left labeled input">
+                        <label  class="ui teal basic label">名称</label>
+                        <input type="text" name="name" placeholder="分类名称">
                     </div>
-
-                    <div class="field">
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="type">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">分类</div>
-                            <div class="menu">
-                                <!--data-value="1" 为传入后端的值-->
-                                <div class="item" data-value="1">开发者手册</div>
-                                <div class="item" data-value="2">开发者手册2</div>
-                                <div class="item" data-value="3">开发者手册3</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <div class="ui checkbox">
-                            <input type="checkbox" id="recommend" name="recommend">
-                            <!--关联上面recommend 的 id-->
-                            <label for="recommend">推荐</label>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <button class="ui mini teal basic button"> <i class="search icon"></i>搜索</button>
-                    </div>
+                </div>
+                <!--ui error message 显示提示信息-->
+                <div class="ui error message"></div>
+                <div class="ui right aligned container">
+                    <!--onclick="window.history.go(-1)" 返回上个页面-->
+                    <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                    <button class="ui teal submit button">提交</button>
 
                 </div>
             </form>
-            <!--celled网格线-->
-            <table class="ui celled table">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>标题</th>
-                    <th>类型</th>
-                    <th>推荐</th>
-                    <th>更新时间</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>可以练习</td>
-                    <td>认知升级</td>
-                    <td>是</td>
-                    <td>2020-08-12 09:45</td>
-                    <td>
-                        <a href="#" class="ui mini teal basic button">编辑</a>
-                        <a href="#" class="ui mini red basic button">删除</a>
-                    </td>
-
-                </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th colspan="6">
-                            <div class="ui mini pagination menu">
-                                <a class="item">上一页</a>
-                                <a class="item">下一页</a>
-                            </div>
-                            <a href="#" class="ui mini right floated teal basic button">新增</a>
-                        </th>
-                    </tr>
-                </tfoot>
-            </table>
-
-
         </div>
     </div>
 <!--底部-->
@@ -179,7 +124,32 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <!--/*/</th:block>/*/-->
+
+<script src="../../static/lib/editormd/editormd.min.js"></script>
+
 <script>
+    /*初始化markdown编辑器*/
+   /* var contentEditor;
+    $(function() {
+        contentEditor = editormd("md-content", {
+            width   : "100%",
+            height  : 640,
+            syncScrolling : "single",
+            path    : "../static/lib/editormd/lib/"
+        });
+*/
+        /*
+        // or
+        testEditor = editormd({
+            id      : "test-editormd",
+            width   : "90%",
+            height  : 640,
+            path    : "../lib/"
+        });
+        */
+    // });
+    
+    
     $('.menu.toggle').click(function () {
         /*toggleClass 有则去除没有则加上*/
         $('.m-item').toggleClass('m-mobile-hide')
@@ -187,6 +157,20 @@
 
     $('.ui.dropdown').dropdown({
         on:'hover'
+    });
+    /*表单数据校验*/
+    $('.ui.form').form({
+        fields : {
+            title : {
+                identifier : 'name',
+                rules : [{
+                    /*非空校验*/
+                    type : 'empty',
+                    prompt : '请输入分类名称'
+
+                }]
+            },
+        }
     });
 </script>
 </body>

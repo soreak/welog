@@ -4,6 +4,8 @@ import com.soreak.pojo.Type;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface TypeService {
     Type saveType(Type type);
     Type getType(Long id);
@@ -13,4 +15,6 @@ public interface TypeService {
 
     void deleteType(Long id);
     Type getTypeByName(String name);
+
+    List<Type> listType();
 }

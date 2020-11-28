@@ -4,7 +4,9 @@ import com.soreak.NotFoundException;
 import com.soreak.dao.BlogRepository;
 import com.soreak.pojo.Blog;
 import com.soreak.pojo.Type;
+import com.soreak.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,6 +22,7 @@ import java.util.List;
 
 @Service
 public class BlogServiceImpl implements BlogService {
+    @Autowired
     private BlogRepository blogRepository;
 
 
@@ -29,16 +32,16 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Page<Blog> ListBlog(Pageable pageable, Blog blog) {
+    public Page<Blog> listBlog(Pageable pageable, BlogQuery blog) {
         return blogRepository.findAll(new Specification<Blog>() {
             @Override
             public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<>();
                 if(!"".equals(blog.getTitle())&&blog.getTitle() != null){
-                    predicate.add(cb.like(root.<String>get("title"),"%"+blog.getTitle()));
+                    predicate.add(cb.like(root.<String>get("title"),"%"+blog.getTitle()+"%"));
                 }
-                if (blog.getType().getId() != null){
-                    predicate.add(cb.equal(root.<Type>get("type").get("id"),blog.getType().getId()));
+                if (blog.getTypeId() != null){
+                    predicate.add(cb.equal(root.<Type>get("type").get("id"),blog.getTypeId()));
                 }
                 if(blog.isRecommend()){
                     predicate.add(cb.equal(root.<Boolean>get("recommend"),blog.isRecommend()));

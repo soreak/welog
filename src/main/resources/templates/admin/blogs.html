@@ -66,16 +66,19 @@
                     </div>
 
                     <div class="field">
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="typeId">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">分类</div>
-                            <div class="menu">
-                                <!--data-value="1" 为传入后端的值-->
-                                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">开发者手册</div>
+                        <div class="ui labeled action input">
+                            <div class="ui type selection dropdown">
+                                <input type="hidden" name="typeId">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">分类</div>
+                                <div class="menu">
+                                    <!--data-value="1" 为传入后端的值-->
+                                    <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">开发者手册</div>
 
+                                </div>
                             </div>
                         </div>
+                        <button class="ui compact button">clear</button>
                     </div>
 
                     <div class="field">
@@ -100,6 +103,7 @@
                         <th>标题</th>
                         <th>类型</th>
                         <th>推荐</th>
+                        <th>状态</th>
                         <th>更新时间</th>
                         <th>操作</th>
                     </tr>
@@ -110,6 +114,7 @@
                         <td th:text="${blog.title}">可以练习</td>
                         <td th:text="${blog.type.name}">认知升级</td>
                         <td th:text="${blog.recommend} ? '是':'否'">是</td>
+                        <td th:text="${blog.published} ? '发布':'草稿'">是</td>
                         <td th:text="${blog.updateTime}">2020-08-12 09:45</td>
                         <td>
                             <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal basic button">编辑</a>
@@ -120,7 +125,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th colspan="6">
+                        <th colspan="7">
                             <div class="ui mini pagination menu" th:if="${page.totalPages}>1">
                                 <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">上一页</a>
                                 <a onclick="page(this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">下一页</a>
@@ -130,6 +135,12 @@
                     </tr>
                     </tfoot>
                 </table>
+
+                <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                    <i class="close icon"></i>
+                    <div class="header">提示：</div>
+                    <p th:text="${message}">操作成功!</p>
+                </div>
             </div>
             <!--celled网格线-->
 
@@ -202,6 +213,15 @@
         loaddata();
     });
 
+    $('.compact.button')
+        .on('click',function () {
+            $(' .ui.type.dropdown')
+                .dropdown('clear')
+    })
+
+    $('.message .close').on('click',function(){
+        $(this).closest('.message').transition('fade');
+    })
 
     function loaddata() {
         $('#table-container').load(/*[[@{/amdin/blogs/search}]]*/"/admin/blogs/search",{

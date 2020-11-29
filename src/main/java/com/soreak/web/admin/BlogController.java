@@ -61,9 +61,25 @@ public class BlogController {
     @GetMapping("/blogs/input")
     public String input(Model model){
 
+        setTypeAndTag(model);
+
+        model.addAttribute("blog",new Blog());
+        return INPUT;
+    }
+
+    private void setTypeAndTag(Model model){
         model.addAttribute("tags",tagService.listTag());
         model.addAttribute("types",typeService.listType());
-        model.addAttribute("blog",new Blog());
+    }
+
+    @GetMapping("/blogs/{id}/input")
+    public String editInput(@PathVariable Long id,Model model){
+
+        setTypeAndTag(model);
+        Blog blog= blogService.getBlog(id);
+        blog.init();
+
+        model.addAttribute("blog",blog);
         return INPUT;
     }
 
@@ -82,6 +98,13 @@ public class BlogController {
         }else {
             attributes.addFlashAttribute("message","操作成功");
         }
+        return REDIRECT;
+    }
+
+    @GetMapping("blogs/{id}/delete")
+    public String delete(@PathVariable Long id,RedirectAttributes attributes){
+        blogService.deleteBlog(id);
+        attributes.addFlashAttribute("message","删除成功");
         return REDIRECT;
     }
 

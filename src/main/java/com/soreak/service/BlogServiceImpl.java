@@ -8,7 +8,9 @@ import com.soreak.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,6 +56,17 @@ public class BlogServiceImpl implements BlogService {
         },pageable);
     }
 
+    @Override
+    public Page<Blog> listBlog(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Blog> listBlog(String query, Pageable pageable) {
+        return blogRepository.findByQuery(query,pageable);
+
+    }
+
     @Transactional
     @Override
     public Blog saveBlog(Blog blog) {
@@ -77,6 +90,7 @@ public class BlogServiceImpl implements BlogService {
             throw new NotFoundException("该博客不存在");
         }
         BeanUtils.copyProperties(blog,b);
+        b.setUpdateTime(new Date());
         return blogRepository.save(b);
     }
 
@@ -84,5 +98,12 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void deleteBlog(Long id) {
         blogRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Blog> listRecommendBlogTop(Integer size) {
+        Pageable pageable = PageRequest.of(0,8, Sort.Direction.DESC,"updateTime");
+
+        return blogRepository.findTop(pageable);
     }
 }

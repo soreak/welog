@@ -19,3 +19,5 @@ logging:
     com.soreak: debug
   file:
     path: log/blog.log
+
+comment.avatar: /images/avatar.jpg

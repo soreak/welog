@@ -48,14 +48,14 @@
             <div class="ui top attached segment">
                 <div class="ui horizontal link list">
                     <div class="item">
-                        <img src="http://lorempixel.com/100/100/" alt="" class="ui avatar image">
-                        <div class="content"><a href="#" class="header">Aaron</a></div>
+                        <img src="http://lorempixel.com/100/100/" th:src="@{${blog.user.avatar}}" alt="" class="ui avatar image">
+                        <div class="content"><a href="#" class="header" th:text="${blog.user.nickname}">soreaK</a></div>
                     </div>
                     <div class="item">
-                        <i class="calendar icon"></i>2020-8-6
+                        <i class="calendar icon" ></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2020-8-6</span>
                     </div>
                     <div class="item">
-                        <i class="eye icon"></i>2333
+                        <i class="eye icon"></i><span th:text="${blog.views}">2333</span>
                     </div>
                 </div>
 
@@ -64,17 +64,17 @@
             <div class="ui attached segment">
                 <!--fluid撑满外层-->
                 <!--rounded image 没有加image rounded 无效-->
-                <img src="http://lorempixel.com/800/400/" alt="" class="ui fluid rounded image">
+                <img src="http://lorempixel.com/800/400/" th:src="@{${blog.firstPicture}}" alt="" class="ui fluid rounded image">
             </div>
             <!--内容-->
             <div class="ui attached padded segment">
                 <!--basic 去掉segment外部的框框-->
                 <div class="ui right aligned basic segment">
-                    <div class="ui orange basic label">原创</div>
+                    <div class="ui orange basic label" th:text="${blog.flag}">原创</div>
                 </div>
-                <h2 class="ui center aligned header">非暴力沟通</h2>
+                <h2 class="ui center aligned header" th:text="${blog.title}">非暴力沟通</h2>
                 <br>
-                <div id="content" class="typo typo-selection js-toc-content m-padded-lr-response m-padded-tb-large">
+                <div id="content" class="typo typo-selection js-toc-content m-padded-lr-response m-padded-tb-large" th:utext="${blog.content}">
                     <p>也许我们并不认为自己的谈话方式是暴力的，但我们的语言确实常常引发自己和他人的痛苦</p>
                     <p>——马歇尔·卢森堡 《非暴力沟通》</p>
                     <br>
@@ -95,7 +95,7 @@
                 </div>
                 <!--标签-->
                 <div class="m-padded-lr-response">
-                    <div class="ui basic teal left pointing label">零碎</div>
+                    <div class="ui basic teal left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">零碎</div>
                 </div>
                 <!--赞赏-->
                 <div class="ui center aligned basic segment">
@@ -107,11 +107,11 @@
                         <!--images 默认字体大小为0 设置继承上级-->
                         <div class="ui images" style="font-size: inherit">
                             <div class="image">
-                                <img src="../static/images/avatar.jpg" alt="" class="ui rounded bordered image" style="width: 120px">
+                                <img src="../static/images/avatar.jpg" th:src="@{/images/avatar.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
                                 <div>支付宝</div>
                             </div>
                             <div class="image">
-                                <img src="../static/images/avatar.jpg" alt="" class="ui rounded bordered image" style="width: 120px">
+                                <img src="../static/images/avatar.jpg" th:src="@{/images/avatar.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
                                 <div>微信</div>
                             </div>
                         </div>
@@ -127,8 +127,8 @@
                 <div class="ui middle aligned grid">
                     <div class="eleven wide column">
                         <ui class="list">
-                            <li>作者：Aaron</li>
-                            <li>发表时间：2020-03-26 23:53</li>
+                            <li>作者：<span th:text="${blog.user.nickname}"> soreak</span><a href="#" th:href="@{/about}" target="_blank"></a></li>
+                            <li>发表时间：<span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm')}"> 2020-03-26 23:53</span></li>
                             <li>版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）</li>
                             <li>转载声明：如果是转载博主转载的文章，请附上原文链接</li>
                             <li>公众号转载：请在文末添加作者公众号二维码（公众号二维码见右边，欢迎关注）</li>
@@ -136,91 +136,98 @@
                     </div>
                     <div class="five wide column">
                         <!--right floated 往右边浮动-->
-                        <img src="../static/images/avatar.jpg" alt="" class="ui right floated rounded bordered image" style="width: 110px">
+                        <img src="../static/images/avatar.jpg" th:src="@{/images/avatar.jpg}" alt="" class="ui right floated rounded bordered image" style="width: 110px">
                     </div>
                 </div>
 
             </div>
             <!--留言区域-->
-            <div id="comment-container" class="ui bottom attached segment">
-                <div class="ui teal segment">
-                    <div class="ui comments">
-                        <h3 class="ui dividing header">Comments</h3>
-                        <div class="comment">
-                            <a class="avatar" one-link-mark="yes">
-                                <img src="http://lorempixel.com/100/100/">
-                            </a>
-                            <div class="content">
-                                <a class="author" one-link-mark="yes">Matt</a>
-                                <div class="metadata">
-                                    <span class="date">Today at 5:42PM</span>
-                                </div>
-                                <div class="text">
-                                    How artistic!
-                                </div>
-                                <div class="actions">
-                                    <a class="reply" one-link-mark="yes">回复</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <a class="avatar" one-link-mark="yes">
-                                <img src="http://lorempixel.com/100/100/">
-                            </a>
-                            <div class="content">
-                                <a class="author" one-link-mark="yes">Elliot Fu</a>
-                                <div class="metadata">
-                                    <span class="date">Yesterday at 12:30AM</span>
-                                </div>
-                                <div class="text">
-                                    <p>This has been very useful for my research. Thanks as well!</p>
-                                </div>
-                                <div class="actions">
-                                    <a class="reply" one-link-mark="yes">回复</a>
+            <div  class="ui bottom attached segment">
+                <!--留言列表-->
+                <div id="comment-container" class="ui teal segment">
+                    <div th:fragment="commentList">
+                        <div class="ui threaded comments" style="max-width: 100%;">
+                            <h3 class="ui dividing header">评论</h3>
+                            <div class="comment" th:each="comment : ${comments}">
+                                <a class="avatar" one-link-mark="yes">
+                                    <img src="http://lorempixel.com/100/100/" th:src="@{${comment.avatar}}">
+                                </a>
+                                <div class="content">
+                                    <a class="author"  th:text="${comment.nickname}">Matt</a>
+                                    <div class="metadata">
+                                        <span class="date" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
+                                    </div>
+                                    <div class="text" th:text="${comment.content}">
+                                        How artistic!
+                                    </div>
+                                    <div class="actions">
+                                        <a class="reply" one-link-mark="yes" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="comments">
-                                <div class="comment">
-                                    <a class="avatar" one-link-mark="yes">
-                                        <img src="http://lorempixel.com/100/100/">
-                                    </a>
-                                    <div class="content">
-                                        <a class="author" one-link-mark="yes">Jenny Hess</a>
-                                        <div class="metadata">
-                                            <span class="date">Just now</span>
-                                        </div>
-                                        <div class="text">
-                                            Elliot you are always so right :)
-                                        </div>
-                                        <div class="actions">
-                                            <a class="reply" one-link-mark="yes">回复</a>
+                            <!--/*-->
+                            <div class="comment">
+                                <a class="avatar" one-link-mark="yes">
+                                    <img src="http://lorempixel.com/100/100/">
+                                </a>
+                                <div class="content">
+                                    <a class="author" one-link-mark="yes">Elliot Fu</a>
+                                    <div class="metadata">
+                                        <span class="date">Yesterday at 12:30AM</span>
+                                    </div>
+                                    <div class="text">
+                                        <p>This has been very useful for my research. Thanks as well!</p>
+                                    </div>
+                                    <div class="actions">
+                                        <a class="reply" one-link-mark="yes">回复</a>
+                                    </div>
+                                </div>
+                                <div class="comments">
+                                    <div class="comment">
+                                        <a class="avatar" one-link-mark="yes">
+                                            <img src="http://lorempixel.com/100/100/">
+                                        </a>
+                                        <div class="content">
+                                            <a class="author" one-link-mark="yes">Jenny Hess</a>
+                                            <div class="metadata">
+                                                <span class="date">Just now</span>
+                                            </div>
+                                            <div class="text">
+                                                Elliot you are always so right :)
+                                            </div>
+                                            <div class="actions">
+                                                <a class="reply" one-link-mark="yes">回复</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="comment">
-                            <a class="avatar" one-link-mark="yes">
-                                <img src="http://lorempixel.com/100/100/">
-                            </a>
-                            <div class="content">
-                                <a class="author" one-link-mark="yes">Joe Henderson</a>
-                                <div class="metadata">
-                                    <span class="date">5 days ago</span>
-                                </div>
-                                <div class="text">
-                                    Dude, this is awesome. Thanks so much
-                                </div>
-                                <div class="actions">
-                                    <a class="reply" one-link-mark="yes">回复</a>
+                            <div class="comment">
+                                <a class="avatar" one-link-mark="yes">
+                                    <img src="http://lorempixel.com/100/100/">
+                                </a>
+                                <div class="content">
+                                    <a class="author" one-link-mark="yes">Joe Henderson</a>
+                                    <div class="metadata">
+                                        <span class="date">5 days ago</span>
+                                    </div>
+                                    <div class="text">
+                                        Dude, this is awesome. Thanks so much
+                                    </div>
+                                    <div class="actions">
+                                        <a class="reply" one-link-mark="yes">回复</a>
+                                    </div>
                                 </div>
                             </div>
+                            <!--*/-->
                         </div>
-
                     </div>
+
                 </div>
                 <!--ui form 表格样式-->
-                <div class="ui form">
+                <div id="comment-form" class="ui form">
+                    <input type="hidden" name="blog.id" th:value="${blog.id}">
+                    <input type="hidden" name="parentComment.id" th:value="-1">
                     <div class="field">
                         <textarea name="content" placeholder="请输入评论信息..." id="" cols="30" rows="10"></textarea>
                     </div>
@@ -239,7 +246,7 @@
                             </div>
                         </div>
                         <div class="field m-mobile-wide margin-bottom-small">
-                            <button class="ui teal m-mobile-wide button"> <i class="edit icon"></i>发布</button>
+                            <button type="button" id="commentpost-btn" class="ui teal m-mobile-wide button"> <i class="edit icon"></i>发布</button>
                         </div>
 
                     </div>
@@ -320,7 +327,7 @@
 <script src="../static/lib/qrcode/qrcode.min.js"></script>
 <script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
 <!--/*/</th:block>/*/-->
-<script>
+<script th:inline="javascript">
     $('.menu.toggle').click(function () {
         /*toggleClass 有则去除没有则加上*/
         $('.m-item').toggleClass('m-mobile-hide')
@@ -356,8 +363,10 @@
         position : 'left center'
     });
 
+    var serurl = "127.0.0.1:8080";
+    var url = /*[[@{/blog/{id}(id=${blog.id})}]]*/"";
     var qrcode = new QRCode("qrcode", {
-        text: "http://jindo.dev.naver.com/collie",
+        text: serurl+url,
         width: 110,
         height: 110,
         colorDark : "#000000",
@@ -380,6 +389,87 @@
             }
         }
     })
+
+
+    /*表单数据校验*/
+    $('.ui.form').form({
+        fields : {
+            title : {
+                identifier : 'content',
+                rules : [{
+                    /*非空校验*/
+                    type : 'empty',
+                    prompt : '请输入评论内容'
+
+                }]
+            },
+
+            content : {
+                identifier : 'nickname',
+                rules : [{
+                    /*非空校验*/
+                    type : 'empty',
+                    prompt : '请输入你的名字'
+
+                }]
+            },
+
+            typeId : {
+                identifier : 'email',
+                rules : [{
+                    /*非空校验*/
+                    type : 'empty',
+                    prompt : '请输入你的邮箱'
+
+                }]
+            },
+
+
+        }
+    });
+
+    $('#commentpost-btn').click(function () {
+        var boo = $('.ui.form').form('validate form');
+        if (boo){
+            console.log('校验成功');
+            postData();
+        }else {
+            console.log('校验失败');
+        }
+    });
+
+    // 页面加载完成后加载评论
+    $(function () {
+        $('#comment-container').load(/*[[@{/comments/{id}(id=${blog.id})}]]*/"comment/0");
+    });
+
+    function postData() {
+        $("#comment-container").load(/*[[@{/comments}]]*/"",{
+            "parentComment.id" : $("[name='parentComment.id']").val(),
+            "blog.id" : $("[name='blog.id']").val(),
+            "nickname" : $("[name='nickname']").val(),
+            "email" : $("[name='email']").val(),
+            "content" : $("[name='content']").val(),
+        },function (responseTxt,statusTxt,xhr) {
+            $(window).scrollTo($('#comment-container'),500);
+            clearContent();
+        });
+    }
+
+    function clearContent() {
+        $("[name='content']").val('');
+        $("[name='parentComment.id']").val(-1);
+        $("[name='content']").attr("placeholder","请输入评论信息....");
+
+    }
+
+    function reply(obj) {
+        var commentId = $(obj).data('commentid');
+        var commentNickname = $(obj).data('commentnickname');
+        $("[name='content']").attr("placeholder","@"+commentNickname).focus();
+        $("[name='parentComment.id']").val(commentId);
+        $(window).scrollTo($('#comment-form'),500);
+    }
 
 </script>
 </body>
